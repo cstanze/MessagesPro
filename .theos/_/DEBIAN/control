@@ -1,10 +1,10 @@
 Package: com.daydream.messagespro
 Name: MessagesPro
-Depends: mobilesubstrate
+Depends: mobilesubstrate, ws.hbang.common (>= 1.14)
 Architecture: iphoneos-arm
 Description: An awesome MobileSubstrate tweak!
 Maintainer: DayDream
 Author: DayDream
 Section: Tweaks
-Version: 0.0.1-2+debug
-Installed-Size: 168
+Version: 0.0.1-11+debug
+Installed-Size: 360
