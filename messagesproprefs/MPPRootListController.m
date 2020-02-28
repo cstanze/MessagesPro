@@ -17,11 +17,11 @@
 	[task launch];
 }
 
--(NSArray*)validTitles:(id)target {
+-(NSArray*)validTitles {
 	return @[@"Red", @"Orange", @"Green", @"Blue", @"Yellow", @"Black", @"White"];
 }
 
--(NSArray*)validValues:(id)target {
+-(NSArray*)validValues {
         return @[@"Red", @"Orange", @"Green", @"Blue", @"Yellow", @"Black", @"White"];
 }
 

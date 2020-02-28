@@ -51,10 +51,6 @@
 			<string>PSLinkListCell</string>
 			<key>label</key>
 			<string>Gradient Color 1</string>
-			<key>titlesDataSource</key>
-			<string>validTitles:</string>
-			<key>valuesDataSource</key>
-			<string>validValues:</string>
 			<key>detail</key>
 			<string>PSListItemsController</string>
 			<key>defaults</key>
@@ -63,6 +59,10 @@
 			<string>Red</string>
 			<key>key</key>
 			<string>gradientColor</string>
+			<key>titlesDataSource</key>
+			<string>validTitles</string>
+			<key>valuesDataSource</key>
+			<string>validValues</string>
 		</dict>
 		<dict>
                         <key>key</key>
@@ -70,9 +70,9 @@
                         <key>label</key>
                         <string>Gradient Color 2</string>
                         <key>titlesDataSource</key>
-                        <string>validTitles:</string>
+                        <string>validTitles</string>
                         <key>valuesDataSource</key>
-                        <string>validValues:</string>
+                        <string>validValues</string>
                         <key>detail</key>
                         <string>PSListItemsController</string>
                         <key>defaults</key>
