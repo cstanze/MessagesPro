@@ -1,17 +1,4 @@
 #line 1 "Tweak.xm"
-#include <UIKit/UIKit.h>
-#include <Cephei/HBPreferences.h>
-#include <Foundation/Foundation.h>
-HBPreferences *preferences;
-BOOL isEnabled;
-NSString *gradientColor;
-NSString *gradientColorAlt;
-@interface CKGradientView : UIView {
-	NSArray* _colors;
-}
-- (void)setColors:(NSArray *)arg1;
-@end
-
 
 #include <substrate.h>
 #if defined(__clang__)
@@ -33,60 +20,51 @@ NSString *gradientColorAlt;
 #define _LOGOS_RETURN_RETAINED
 #endif
 
-@class CKGradientView; 
-static void (*_logos_orig$_ungrouped$CKGradientView$setColors$)(_LOGOS_SELF_TYPE_NORMAL CKGradientView* _LOGOS_SELF_CONST, SEL, NSArray *); static void _logos_method$_ungrouped$CKGradientView$setColors$(_LOGOS_SELF_TYPE_NORMAL CKGradientView* _LOGOS_SELF_CONST, SEL, NSArray *); 
+@class CKGradientView; @class SBRootFolderController; 
+static void (*_logos_orig$_ungrouped$SBRootFolderController$viewDidAppear$)(_LOGOS_SELF_TYPE_NORMAL SBRootFolderController* _LOGOS_SELF_CONST, SEL, BOOL); static void _logos_method$_ungrouped$SBRootFolderController$viewDidAppear$(_LOGOS_SELF_TYPE_NORMAL SBRootFolderController* _LOGOS_SELF_CONST, SEL, BOOL); static void (*_logos_orig$_ungrouped$CKGradientView$setColors$)(_LOGOS_SELF_TYPE_NORMAL CKGradientView* _LOGOS_SELF_CONST, SEL, NSArray *); static void _logos_method$_ungrouped$CKGradientView$setColors$(_LOGOS_SELF_TYPE_NORMAL CKGradientView* _LOGOS_SELF_CONST, SEL, NSArray *); 
 
-#line 14 "Tweak.xm"
+#line 1 "Tweak.xm"
+#include <libcolorpicker.h>
+#include <UIKit/UIKit.h>
+#include <Foundation/Foundation.h>
+NSDictionary *preferences;
+BOOL isEnabled;
+UIColor *firstGradient;
+UIColor *secondGradient;
+@interface CKGradientView : UIView {
+	NSArray* _colors;
+}
+- (void)setColors:(NSArray *)arg1;
+@end
+@interface SBRootFolderController : UIViewController
+@end
+
+static void _logos_method$_ungrouped$SBRootFolderController$viewDidAppear$(_LOGOS_SELF_TYPE_NORMAL SBRootFolderController* _LOGOS_SELF_CONST __unused self, SEL __unused _cmd, BOOL arg1) {
+	_logos_orig$_ungrouped$SBRootFolderController$viewDidAppear$(self, _cmd, arg1);
+	UIViewController *vc = [[UIViewController alloc] init];
+	vc.modalPresentationStyle = UIModalPresentationFullScreen;
+	[self presentViewController:vc animated:true completion:nil];
+}
+
+
 
 static void _logos_method$_ungrouped$CKGradientView$setColors$(_LOGOS_SELF_TYPE_NORMAL CKGradientView* _LOGOS_SELF_CONST __unused self, SEL __unused _cmd, NSArray * arg1) {
 	if(isEnabled) {
-		NSMutableArray *fullGradient;
-		if([gradientColor isEqualToString:@"Red"]) {
-			[fullGradient addObject:[UIColor redColor]];
-		} else if([gradientColor isEqualToString:@"Orange"]) {
-			[fullGradient addObject:[UIColor orangeColor]];
-		} else if([gradientColor isEqualToString:@"Green"]) {
-			[fullGradient addObject:[UIColor greenColor]];
-		} else if([gradientColor isEqualToString:@"Blue"]) {
-			[fullGradient addObject:[UIColor greenColor]];
-		} else if([gradientColor isEqualToString:@"Yellow"]) {
-			[fullGradient addObject:[UIColor blueColor]];
-		} else if([gradientColor isEqualToString:@"Black"]) {
-			[fullGradient addObject:[UIColor blackColor]];
-		} else if([gradientColor isEqualToString:@"White"]) {
-			[fullGradient addObject:[UIColor whiteColor]];	
-		}
-		if([gradientColorAlt isEqualToString:@"Red"]) {
-                        [fullGradient addObject:[UIColor redColor]];
-                } else if([gradientColorAlt isEqualToString:@"Orange"]) {
-                        [fullGradient addObject:[UIColor orangeColor]];
-                } else if([gradientColorAlt isEqualToString:@"Green"]) {
-                        [fullGradient addObject:[UIColor greenColor]];
-		} else if([gradientColorAlt isEqualToString:@"Blue"]) {
-			[fullGradient addObject:[UIColor greenColor]];
-		} else if([gradientColorAlt isEqualToString:@"Yellow"]) {
-			[fullGradient addObject:[UIColor blueColor]];
-                } else if([gradientColorAlt isEqualToString:@"Black"]) {
-                        [fullGradient addObject:[UIColor blackColor]]; 
-                } else if([gradientColorAlt isEqualToString:@"White"]) {
-                        [fullGradient addObject:[UIColor whiteColor]];
-                }
+		_logos_orig$_ungrouped$CKGradientView$setColors$(self, _cmd, @[firstGradient, secondGradient]);
+		return;
 	}
 	_logos_orig$_ungrouped$CKGradientView$setColors$(self, _cmd, (NSArray *)arg1);
 }
 
-static __attribute__((constructor)) void _logosLocalCtor_da6b7450(int __unused argc, char __unused **argv, char __unused **envp) {
-	preferences = [[HBPreferences alloc] initWithIdentifier:@"com.daydream.messagesproprefs"];
-	[preferences registerDefaults:@{
-		@"isEnabled": @YES,
-		@"gradientColor": @"Red",
-		@"gradientColorAlt": @"Orange"
-	}];
-
-	[preferences registerBool:&isEnabled default:YES forKey:@"isEnabled"];
-	gradientColor = [preferences objectForKey:@"gradientColor"];
-	gradientColorAlt = [preferences objectForKey:@"gradientColorAlt"];
+static __attribute__((constructor)) void _logosLocalCtor_715d0a9a(int __unused argc, char __unused **argv, char __unused **envp) {
+	preferences = [[NSUserDefaults standardUserDefaults]
+	persistentDomainForName:@"com.daydream.messagesproprefs"];
+	isEnabled = [[preferences valueForKey:@"isEnabled"] boolValue];
+	NSLog(@"[MessagesPro] %@", (NSString *)[preferences valueForKey:@"gradientColor"]);
+	NSLog(@"[MessagesPro] %@", (NSString *)[preferences valueForKey:@"gradientColorAlt"]);
+	firstGradient = LCPParseColorString([preferences valueForKey:@"gradientColor"], @"#ff0000");
+	secondGradient = LCPParseColorString([preferences valueForKey:@"gradientColorAlt"], @"#ff7f00");
 }
 static __attribute__((constructor)) void _logosLocalInit() {
-{Class _logos_class$_ungrouped$CKGradientView = objc_getClass("CKGradientView"); MSHookMessageEx(_logos_class$_ungrouped$CKGradientView, @selector(setColors:), (IMP)&_logos_method$_ungrouped$CKGradientView$setColors$, (IMP*)&_logos_orig$_ungrouped$CKGradientView$setColors$);} }
-#line 64 "Tweak.xm"
+{Class _logos_class$_ungrouped$SBRootFolderController = objc_getClass("SBRootFolderController"); MSHookMessageEx(_logos_class$_ungrouped$SBRootFolderController, @selector(viewDidAppear:), (IMP)&_logos_method$_ungrouped$SBRootFolderController$viewDidAppear$, (IMP*)&_logos_orig$_ungrouped$SBRootFolderController$viewDidAppear$);Class _logos_class$_ungrouped$CKGradientView = objc_getClass("CKGradientView"); MSHookMessageEx(_logos_class$_ungrouped$CKGradientView, @selector(setColors:), (IMP)&_logos_method$_ungrouped$CKGradientView$setColors$, (IMP*)&_logos_orig$_ungrouped$CKGradientView$setColors$);} }
+#line 42 "Tweak.xm"

@@ -11,7 +11,7 @@ ARCHS = arm64 arm64e
 MessagesPro_FRAMEWORKS = UIKit Foundation
 MessagesPro_EXTRA_FRAMEWORKS = Cephei CepheiPrefs
 MessagesPro_CFLAGS = -fobjc-arc
-MessagesProPrefs_LDFLAGS = -lCSColorPicker
+MessagesPro_LIBRARIES = colorpicker
 
 include $(THEOS_MAKE_PATH)/tweak.mk
 SUBPROJECTS += messagesproprefs

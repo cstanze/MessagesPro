@@ -1,5 +1,6 @@
 #import "NSTask.h"
 #include "MPPRootListController.h"
+#include <UIKit/UIKit.h>
 
 @implementation MPPRootListController
 
@@ -11,19 +12,21 @@
 	return _specifiers;
 }
 
+- (id)init {
+	self = [super init];
+	UIBarButtonItem *respringButton = [[UIBarButtonItem alloc] initWithTitle:@"Apply"
+												style:UIBarButtonItemStylePlain
+												target:self
+												action:@selector(respringDevice:)];
+	self.navigationItem.rightBarButtonItem = respringButton;
+	return self;
+}
+
 - (void)respringDevice:(id)sender {
 	NSTask *task = [[NSTask alloc] init];
-	task.launchPath = @"/usr/bin/sbreload";
+	task.launchPath = @"/usr/bin/killall";
+	task.arguments = @[@"-9", @"MobileSMS"];
 	[task launch];
 }
-
--(NSArray*)validTitles {
-	return @[@"Red", @"Orange", @"Green", @"Blue", @"Yellow", @"Black", @"White"];
-}
-
--(NSArray*)validValues {
-        return @[@"Red", @"Orange", @"Green", @"Blue", @"Yellow", @"Black", @"White"];
-}
-
 
 @end

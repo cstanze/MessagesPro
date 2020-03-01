@@ -1,9 +1,9 @@
 Package: com.daydream.messagespro
 Name: MessagesPro
-Depends: mobilesubstrate, ws.hbang.common (>= 1.14)
+Depends: mobilesubstrate, org.thebigboss.libcolorpicker, ws.hbang.common (>= 1.14)
 Version: 0.0.1
 Architecture: iphoneos-arm
 Description: An awesome MobileSubstrate tweak!
-Maintainer: DayDream
-Author: DayDream
+Maintainer: Daydream
+Author: Daydream
 Section: Tweaks

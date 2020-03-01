@@ -9,8 +9,7 @@ MessagesProPrefs_FRAMEWORKS = UIKit
 MessagesProPrefs_EXTRA_FRAMEWORKS = Cephei CepheiPrefs
 MessagesProPrefs_PRIVATE_FRAMEWORKS = Preferences
 MessagesProPrefs_CFLAGS = -fobjc-arc
-MessagesProPrefs_LDFLAGS += -lCSColorPicker
-
+MessagesProPrefs_LIBRARIES = colorpicker
 include $(THEOS_MAKE_PATH)/bundle.mk
 
 internal-stage::
