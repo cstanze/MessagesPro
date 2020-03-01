@@ -60,7 +60,7 @@
 			<key>libcolorpicker</key>
 			<dict>
 				<key>defaults</key>
-				<string>com.daydream.messagesproprefs</string>
+				<string>com.daydream.messagesprocolorprefs</string>
 				<key>key</key>
 				<string>gradientColor</string>
 				<key>fallback</key>
@@ -79,7 +79,7 @@
 			<key>libcolorpicker</key>
 			<dict>
 				<key>defaults</key>
-				<string>com.daydream.messagesproprefs</string>
+				<string>com.daydream.messagesprocolorprefs</string>
 				<key>key</key>
 				<string>gradientColorAlt</string>
 				<key>fallback</key>

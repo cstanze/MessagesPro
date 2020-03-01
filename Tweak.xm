@@ -12,6 +12,9 @@ UIColor *secondGradient;
 @end
 %hook CKGradientView
 - (void)setColors:(NSArray *)arg1 {
+	NSDictionary *colorPrefs = [[NSDictionary alloc] initWithContentsOfURL:[NSURL fileURLWithPath:@"/var/mobile/Library/Preferences/com.daydream.messagesprocolorprefs"]];
+	firstGradient = LCPParseColorString([colorPrefs objectForKey:@"gradientColor"], @"#ff0000");
+	secondGradient = LCPParseColorString([colorPrefs objectForKey:@"gradientColorAlt"], @"#ff7f00");
 	if(isEnabled) {
 		%orig(@[firstGradient, secondGradient]);
 		return;
@@ -23,8 +26,9 @@ UIColor *secondGradient;
 	preferences = [[NSUserDefaults standardUserDefaults]
 	persistentDomainForName:@"com.daydream.messagesproprefs"];
 	isEnabled = [[preferences valueForKey:@"isEnabled"] boolValue];
-	NSLog(@"[MessagesPro] %@", (NSString *)[preferences valueForKey:@"gradientColor"]);
-	NSLog(@"[MessagesPro] %@", (NSString *)[preferences valueForKey:@"gradientColorAlt"]);
-	firstGradient = LCPParseColorString([preferences valueForKey:@"gradientColor"], @"#ff0000");
-	secondGradient = LCPParseColorString([preferences valueForKey:@"gradientColorAlt"], @"#ff7f00");
+	NSDictionary *colorPrefs = [[NSDictionary alloc] initWithContentsOfURL:[NSURL fileURLWithPath:@"/var/mobile/Library/Preferences/com.daydream.messagesprocolorprefs"]];
+	NSLog(@"[MessagesPro] %@", (NSString *)[colorPrefs objectForKey:@"gradientColor"]);
+	NSLog(@"[MessagesPro] %@", (NSString *)[colorPrefs objectForKey:@"gradientColorAlt"]);
+	firstGradient = LCPParseColorString([colorPrefs objectForKey:@"gradientColor"], @"#ff0000");
+	secondGradient = LCPParseColorString([colorPrefs objectForKey:@"gradientColorAlt"], @"#ff7f00");
 }
