@@ -1,34 +1,36 @@
-#include <libcolorpicker.h>
-#include <UIKit/UIKit.h>
-#include <Foundation/Foundation.h>
-NSDictionary *preferences;
-BOOL isEnabled;
-UIColor *firstGradient;
-UIColor *secondGradient;
-@interface CKGradientView : UIView {
-	NSArray* _colors;
-}
+#import "Cephei/HBPreferences.h"
+#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#import "libcolorpicker.h"
+
+static BOOL enabled;
+static UIColor *firstColor;
+static UIColor *secondColor;
+
+@interface CKGradientView : UIView
 - (void)setColors:(NSArray *)arg1;
 @end
+
 %hook CKGradientView
 - (void)setColors:(NSArray *)arg1 {
-	NSDictionary *colorPrefs = [[NSDictionary alloc] initWithContentsOfURL:[NSURL fileURLWithPath:@"/var/mobile/Library/Preferences/com.daydream.messagesprocolorprefs"]];
-	firstGradient = LCPParseColorString([colorPrefs objectForKey:@"gradientColor"], @"#ff0000");
-	secondGradient = LCPParseColorString([colorPrefs objectForKey:@"gradientColorAlt"], @"#ff7f00");
-	if(isEnabled) {
-		%orig(@[firstGradient, secondGradient]);
-		return;
-	}
-	%orig((NSArray *)arg1);
+	%orig(@[firstColor, secondColor]);
 }
 %end
+
+static void reloadPrefs() {
+	HBPreferences *prefs;
+	prefs = [[HBPreferences alloc] initWithIdentifier:@"com.daydream.messagesproprefs"];
+	[prefs registerBool:&enabled default:YES forKey:@"isEnabled"];
+	NSString *firstColorString = [prefs objectForKey:@"firstColor"];
+	NSString *secondColorString = [prefs objectForKey:@"secondColor"];
+	firstColor = LCPParseColorString(firstColorString, @"#F70000");
+	secondColor = LCPParseColorString(secondColorString, @"#FF0000");
+}
 %ctor {
-	preferences = [[NSUserDefaults standardUserDefaults]
-	persistentDomainForName:@"com.daydream.messagesproprefs"];
-	isEnabled = [[preferences valueForKey:@"isEnabled"] boolValue];
-	NSDictionary *colorPrefs = [[NSDictionary alloc] initWithContentsOfURL:[NSURL fileURLWithPath:@"/var/mobile/Library/Preferences/com.daydream.messagesprocolorprefs"]];
-	NSLog(@"[MessagesPro] %@", (NSString *)[colorPrefs objectForKey:@"gradientColor"]);
-	NSLog(@"[MessagesPro] %@", (NSString *)[colorPrefs objectForKey:@"gradientColorAlt"]);
-	firstGradient = LCPParseColorString([colorPrefs objectForKey:@"gradientColor"], @"#ff0000");
-	secondGradient = LCPParseColorString([colorPrefs objectForKey:@"gradientColorAlt"], @"#ff7f00");
+	reloadPrefs();
+
+	CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, (CFNotificationCallback)reloadPrefs, CFSTR("com.daydream.messagesproprefs/ReloadPrefs"), NULL, CFNotificationSuspensionBehaviorCoalesce);
+	
+	if(enabled)
+		%init();
 }

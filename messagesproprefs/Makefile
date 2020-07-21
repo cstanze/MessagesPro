@@ -1,15 +1,17 @@
+ARCHS = arm64 arm64e
+TARGET = iphone:clang:13.2:13.0
+
 include $(THEOS)/makefiles/common.mk
 
 BUNDLE_NAME = MessagesProPrefs
-
-MessagesProPrefs_FILES = MPPRootListController.m
-ARCHS = arm64 arm64e
+MessagesProPrefs_FILES = $(wildcard *.m)
 MessagesProPrefs_INSTALL_PATH = /Library/PreferenceBundles
 MessagesProPrefs_FRAMEWORKS = UIKit
 MessagesProPrefs_EXTRA_FRAMEWORKS = Cephei CepheiPrefs
 MessagesProPrefs_PRIVATE_FRAMEWORKS = Preferences
 MessagesProPrefs_CFLAGS = -fobjc-arc
 MessagesProPrefs_LIBRARIES = colorpicker
+
 include $(THEOS_MAKE_PATH)/bundle.mk
 
 internal-stage::

@@ -8,7 +8,7 @@
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>headerCellClass</key>
-			<string>HBPackageNameHeaderCell</string>
+			<string>MPPPackageNameHeaderCell</string>
 			<key>icon</key>
 			<string>icon.png</string>
 			<key>packageIdentifier</key>
@@ -31,12 +31,12 @@
 		<dict>
 			<key>cell</key>
 			<string>PSGroupCell</string>
-			<key>footerText</key>
-			<string>This is the first alpha of MessagesPro!</string>
 		</dict>
 		<dict>
 			<key>cell</key>
 			<string>PSSwitchCell</string>
+			<key>cellClass</key>
+			<string>MPPSwitchCell</string>
 			<key>default</key>
 			<true />
 			<key>defaults</key>
@@ -45,51 +45,37 @@
 			<string>isEnabled</string>
 			<key>label</key>
 			<string>Enabled</string>
+			<key>PostNotification</key>
+			<string>com.daydream.messagesproprefs/ReloadPrefs</string>
 		</dict>
 		<dict>
 			<key>cell</key>
 			<string>PSGroupCell</string>
-			<key>label</key>
-			<string>Message Colors</string>
+			<key>cellClass</key>
+			<string>MPPGroupCell</string>
+			<key>footerText</key>
+			<string>This is the first alpha of MessagesPro!</string>
 		</dict>
 		<dict>
-			<key>cell</key>
+            <key>action</key>
+            <string>firstcolorpicker</string>
+            <key>cell</key>
 			<string>PSLinkCell</string>
 			<key>cellClass</key>
-			<string>PFSimpleLiteColorCell</string>
-			<key>libcolorpicker</key>
-			<dict>
-				<key>defaults</key>
-				<string>com.daydream.messagesprocolorprefs</string>
-				<key>key</key>
-				<string>gradientColor</string>
-				<key>fallback</key>
-				<string>#ff0000</string>
-				<key>alpha</key>
-				<false/>
-			</dict>
-			<key>label</key>
-			<string>Top Gradient Color</string>
+			<string>MPPLinkCell</string>
+            <key>label</key>
+            <string>First Color</string>
 		</dict>
 		<dict>
-			<key>cell</key>
+            <key>action</key>
+            <string>secondcolorpicker</string>
+            <key>cell</key>
 			<string>PSLinkCell</string>
 			<key>cellClass</key>
-			<string>PFSimpleLiteColorCell</string>
-			<key>libcolorpicker</key>
-			<dict>
-				<key>defaults</key>
-				<string>com.daydream.messagesprocolorprefs</string>
-				<key>key</key>
-				<string>gradientColorAlt</string>
-				<key>fallback</key>
-				<string>#ff7f00</string>
-				<key>alpha</key>
-				<false/>
-			</dict>
-			<key>label</key>
-			<string>Bottom Gradient Color</string>
-		</dict>
+			<string>MPPLinkCell</string>
+            <key>label</key>
+            <string>Second Color</string>
+        </dict>
 	</array>
 	<key>title</key>
 	<string>MessagesPro</string>
