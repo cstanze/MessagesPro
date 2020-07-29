@@ -5,8 +5,9 @@ THEOS_DEVICE_IP = 192.168.1.248
 include $(THEOS)/makefiles/common.mk
 
 TWEAK_NAME = MessagesPro
-MessagesPro_FILES = Tweak.xm
+MessagesPro_FILES = MessagesPro.xm
 MessagesPro_FRAMEWORKS = UIKit Foundation
+MessagesPro_PRIVATE_FRAMEWORKS = ChatKit
 MessagesPro_EXTRA_FRAMEWORKS = Cephei
 MessagesPro_CFLAGS = -fobjc-arc
 MessagesPro_LIBRARIES = colorpicker

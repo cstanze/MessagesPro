@@ -1,15 +1,33 @@
 #import "Cephei/HBPreferences.h"
-#import <UIKit/UIKit.h>
-#import <Foundation/Foundation.h>
 #import "libcolorpicker.h"
+#import "MessagesPro.h"
 
-static BOOL enabled;
-static UIColor *firstColor;
-static UIColor *secondColor;
+		//Variables
+	static BOOL enabled;
 
-@interface CKGradientView : UIView
-- (void)setColors:(NSArray *)arg1;
-@end
+		//Balloon Gradient
+	static UIColor *firstColor;
+	static UIColor *secondColor;
+
+%hook CKConversationListStandardCell
+-(void)layoutSubviews {
+	%orig;
+	self.layer.masksToBounds = YES;
+	self.layer.cornerRadius = 26;
+}
+%end
+
+%hook CKColoredBalloonView
+-(void)setWantsGradient:(BOOL)arg1 {
+	%orig(YES);
+}
+%end
+
+%hook CKBalloonView 
+-(void)setHasTail:(BOOL)arg1 {
+	%orig(NO);
+}
+%end
 
 %hook CKGradientView
 - (void)setColors:(NSArray *)arg1 {
